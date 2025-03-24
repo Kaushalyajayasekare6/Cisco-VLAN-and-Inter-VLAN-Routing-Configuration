@@ -1,0 +1,65 @@
+router............................
+
+Router>en
+Router#conf t
+Router(config)#int gig 0/0
+Router(config-if)#no shut
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+!
+Router(config)#int gig 0/0.10
+Router(config-subif)#encapsulation dot1q 10
+Router(config-subif)#ip address 192.168.1.62 255.255.255.192
+%LINK-5-CHANGED: Interface GigabitEthernet0/0.10, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0.10, changed state to up
+!
+Router(config)#int gig 0/0.20
+Router(config-subif)#encapsulation dot1q 20
+Router(config-subif)#ip address 192.168.1.126 255.255.255.192
+%LINK-5-CHANGED: Interface GigabitEthernet0/0.20, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0.20, changed state to up
+!
+Router#wr
+Building configuration...
+[OK]
+Router#
+
+
+switch..................
+Current configuration : 1307 bytes
+!
+version 15.0
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Switch
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+interface FastEthernet0/1
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/2
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/3
+ switchport access vlan 20
+ switchport mode access
+!
+interface FastEthernet0/4
+ switchport access vlan 20
+ switchport mode access
+!
+interface FastEthernet0/24
+ switchport mode trunk
+!
+interface Vlan1
+ no ip address
+ shutdown
+
+end
+wr
